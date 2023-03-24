@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="log-dwFlow" doc:id="888f74fd-b517-4ff3-8819-1035f47d7a76" >
+		<http:listener doc:name="Listener" doc:id="a93d4e6a-dc8d-4436-b8d4-f17b71e08145" config-ref="HTTP_Listener_config" path="/dw" outputMimeType="application/json" allowedMethods="POST"/>
+		<ee:transform doc:name="Transform Message" doc:id="3bcc93be-3b34-4f87-9972-930ab8fffc6e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+log("This is " ++ payload.one) ++ 
+log("This is " ++ payload.two) ++ 
+log("This is "++ payload.three)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
